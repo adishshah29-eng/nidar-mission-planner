@@ -9,6 +9,7 @@ const SECTIONS = [
   ['Setup', /vehicle setup & readiness/i],
   ['Configuration', /planner settings/i],
   ['Simulation', /simulation/i],
+  ['Reports', /reports/i],
   ['Help', /help/i],
 ]
 

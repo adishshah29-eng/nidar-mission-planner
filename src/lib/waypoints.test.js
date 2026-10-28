@@ -64,7 +64,7 @@ describe('waypoints', () => {
 
   it('U26 broken, wrong-type and empty files give an error', () => {
     expect(parseMission('{oops').error).toMatch(/not a valid/i)
-    expect(parseMission(JSON.stringify({ hello: 1 })).error).toMatch(/not a NIDAR mission/i)
+    expect(parseMission(JSON.stringify({ hello: 1 })).error).toMatch(/not a Solder & Forget mission/i)
     expect(parseMission('').error).toBeTruthy()
     const bad = JSON.parse(serializeMission(defaultMission()))
     bad.items[0].lat = 500

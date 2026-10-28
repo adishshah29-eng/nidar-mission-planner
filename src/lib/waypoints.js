@@ -70,7 +70,7 @@ export function parseMission(text) {
     return { error: 'This file is not a valid mission file (it is not JSON).' }
   }
   if (!data || data.format !== FORMAT || !Array.isArray(data.items)) {
-    return { error: 'This file is not a NIDAR mission file.' }
+    return { error: 'This file is not a Solder & Forget mission file.' }
   }
   if (data.items.length > MAX_ITEMS) {
     return { error: `Mission has ${data.items.length} items; the limit is ${MAX_ITEMS}.` }

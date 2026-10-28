@@ -28,6 +28,18 @@ export function PageHeader({ title, subtitle, children }) {
   )
 }
 
+export function Stat({ icon: Icon, label, value }) {
+  return (
+    <div className="stat" role="group" aria-label={label}>
+      <Icon aria-hidden="true" size={26} strokeWidth={1.75} />
+      <div>
+        <span className="stat-label">{label}</span>
+        <span className="stat-value" data-testid="value">{value}</span>
+      </div>
+    </div>
+  )
+}
+
 export function Dot({ tone = 'idle' }) {
   return <span className={`dot dot-${tone}`} aria-hidden="true" />
 }

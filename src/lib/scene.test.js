@@ -18,11 +18,11 @@ describe('aerial photo scene', () => {
     expect(br.y).toBeCloseTo(SCENE.bounds.ymin)
   })
 
-  it('S3 the sim has the 9 people from the photo as survivors, with 9 payloads', () => {
+  it('S3 the sim has the 9 people from the photo as survivors, with 10 payloads loaded', () => {
     const s = createSim({ home: HOME })
     expect(PEOPLE).toHaveLength(9)
     expect(s.survivors).toHaveLength(9)
-    expect(s.payloads.total).toBe(9)
+    expect(s.payloads.total).toBe(10)
     s.survivors.forEach((v, i) => expect(v.pos).toEqual(pxToM(PEOPLE[i].px, PEOPLE[i].py)))
   })
 

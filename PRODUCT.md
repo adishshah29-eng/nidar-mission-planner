@@ -1,4 +1,4 @@
-# NIDAR RescueSwarm
+# Solder & Forget RescueSwarm
 
 ## What it is
 A ground control station (GCS) web app for a dual-drone search-and-rescue mission. Drone 01 searches an assigned sector and detects survivors; Drone 02 delivers payloads to confirmed survivors.

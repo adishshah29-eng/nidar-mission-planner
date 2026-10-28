@@ -23,6 +23,8 @@ export const DRONES = {
 const SURVIVORS = PEOPLE.map((p, i) => ({ id: `S${i + 1}`, pos: pxToM(p.px, p.py), conf: p.conf }))
 
 // Lanes closer than 2 x the detection radius, so a drone moving 8 m per step cannot pass someone between lanes.
+// The payload rack holds 10; the photo has 9 people, so one is left over.
+export const PAYLOADS = 10
 export const LANE_SPACING = 90
 export const DETECT_RADIUS = 50
 const HOME_POS = { x: 0, y: 0 }
@@ -49,7 +51,7 @@ export function createSim({ home, speed = 1 }) {
     t: 0,
     drones: { d1: newDrone(lawnmower(SECTORS.A, true)), d2: newDrone(lawnmower(SECTORS.B, false)) },
     survivors: SURVIVORS.map((s) => ({ ...s, pos: { ...s.pos }, status: 'hidden', detectedAt: null })),
-    payloads: { total: SURVIVORS.length, deployed: 0 },
+    payloads: { total: PAYLOADS, deployed: 0 },
   }
 }
 
@@ -70,7 +72,7 @@ export function isValidSim(s) {
   if (!droneOk(s.drones?.d1) || !droneOk(s.drones?.d2)) return false
   if (!Array.isArray(s.survivors) || s.survivors.length !== SURVIVORS.length) return false
   if (!s.survivors.every((v, i) => v && v.id === SURVIVORS[i].id && isPoint(v.pos) && num(v.conf) && SURVIVOR_STATUSES.includes(v.status))) return false
-  return num(s.payloads?.total) && num(s.payloads?.deployed)
+  return s.payloads?.total === PAYLOADS && num(s.payloads.deployed)
 }
 
 export const reset = (s) => createSim(s.opts)

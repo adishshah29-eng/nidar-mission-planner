@@ -56,7 +56,7 @@ export const CONFIG_SECTIONS = [
     check('paramsBackground', 'Download parameters in background'),
   ] },
   { title: 'Logs & Map Cache', icon: 'database', fields: [
-    text('logPath', 'Log folder', 'Documents/NIDAR/logs'),
+    text('logPath', 'Log folder', 'Documents/SolderAndForget/logs'),
     select('mapAccess', 'Map access mode', ['ServerAndCache', 'CacheOnly', 'ServerOnly']),
   ] },
 ]

@@ -36,7 +36,7 @@ describe('params', () => {
 
   it('U35 broken or wrong parameter files give an error', () => {
     expect(parseParams('{oops').error).toMatch(/not a valid/i)
-    expect(parseParams(JSON.stringify({ format: 'other' })).error).toMatch(/not a NIDAR parameter file/i)
+    expect(parseParams(JSON.stringify({ format: 'other' })).error).toMatch(/not a Solder & Forget parameter file/i)
     const bad = JSON.parse(serializeParams(rows()))
     bad.rows[0].value = 'abc'
     expect(parseParams(JSON.stringify(bad)).error).toMatch(/row 1/i)

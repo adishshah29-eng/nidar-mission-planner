@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
-import { Crosshair, Map, Settings, SlidersHorizontal, MonitorPlay, CircleHelp, Link, Unlink, Clock, Wifi } from 'lucide-react'
+import { Crosshair, Map, Settings, SlidersHorizontal, MonitorPlay, ChartColumn, CircleHelp, Link, Unlink, Clock, Wifi } from 'lucide-react'
 import { QuadIcon } from './components/ui'
-import { useHashRoute, usePersistentState, useSimulation, useNow, navigate } from './lib/hooks'
+import { useHashRoute, usePersistentState, useSimulation, useMissionHistory, useNow, navigate } from './lib/hooks'
 import { CONFIG_DEFAULTS, sanitizeConfig } from './lib/config'
 import { disconnectedDrone, connectDrone, disconnect, sanitizeDrone } from './lib/readiness'
 import { HOME } from './lib/waypoints'
@@ -10,6 +10,7 @@ import Plan from './screens/Plan'
 import Setup from './screens/Setup'
 import Configuration from './screens/Configuration'
 import Simulation from './screens/Simulation'
+import Report from './screens/Report'
 import Help from './screens/Help'
 
 const NAV = [
@@ -18,6 +19,7 @@ const NAV = [
   ['setup', 'Setup', Settings],
   ['configuration', 'Configuration', SlidersHorizontal],
   ['simulation', 'Simulation', MonitorPlay],
+  ['reports', 'Reports', ChartColumn],
   ['help', 'Help', CircleHelp],
 ]
 
@@ -56,6 +58,7 @@ export default function App() {
   const [config, setConfig] = usePersistentState('config', CONFIG_DEFAULTS, sanitizeConfig)
   const [simSettings, setSimSettings] = usePersistentState('simSettings', SIM_DEFAULTS, sanitizeSimSettings)
   const simCtl = useSimulation({ home: simSettings.home, speed: simSettings.speed })
+  const [history, clearHistory] = useMissionHistory(simCtl.sim)
 
   const linked = [setup.d1, setup.d2].filter((d) => d.connected).length
   const allLinked = linked === 2
@@ -83,6 +86,7 @@ export default function App() {
         onLaunch={onLaunch}
       />
     )
+  else if (active === 'reports') page = <Report sim={simCtl.sim} history={history} onClear={clearHistory} config={config} />
   else if (active === 'help') page = <Help />
   else page = <Mission simCtl={simCtl} config={config} simSettings={simSettings} setup={setup} />
 
@@ -94,9 +98,9 @@ export default function App() {
         Skip to content
       </a>
       <header className="topbar">
-        <a className="brand" href="#/mission" aria-label="NIDAR RescueSwarm home">
+        <a className="brand" href="#/mission" aria-label="Solder & Forget RescueSwarm home">
           <QuadIcon size={34} />
-          <span className="brand-text"><strong>NIDAR</strong><span>RescueSwarm</span></span>
+          <span className="brand-text"><strong>Solder &amp; Forget</strong><span>RescueSwarm</span></span>
         </a>
         <nav className="main-nav" aria-label="Main">
           {NAV.map(([path, label, Icon]) => (

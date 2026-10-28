@@ -55,7 +55,7 @@ export function parseParams(text) {
   } catch {
     return { error: 'This file is not a valid parameter file (it is not JSON).' }
   }
-  if (!data || data.format !== FORMAT || !Array.isArray(data.rows)) return { error: 'This file is not a NIDAR parameter file.' }
+  if (!data || data.format !== FORMAT || !Array.isArray(data.rows)) return { error: 'This file is not a Solder & Forget parameter file.' }
   if (data.rows.length > MAX_PARAMS) return { error: `File has ${data.rows.length} parameters; the limit is ${MAX_PARAMS}.` }
   const rows = []
   const names = new Set()

@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
 import { load, save } from './storage'
 import { createSim, tick, start, pause, isValidSim } from './simEngine'
+import { finishedRun, sanitizeHistory, MAX_HISTORY } from './history'
 
 export function usePersistentState(key, initial, sanitize = (v) => v) {
   const [value, setValue] = useState(() => sanitize(load(key, typeof initial === 'function' ? initial() : initial)))
@@ -48,6 +49,19 @@ export function useSimulation(defaults) {
     [setSim],
   )
   return useMemo(() => ({ sim, ...controls }), [sim, controls])
+}
+
+// Saves a record whenever a mission completes or is reset/replaced part-way through.
+export function useMissionHistory(sim) {
+  const [history, setHistory] = usePersistentState('history', () => [], sanitizeHistory)
+  const prev = useRef(sim)
+  useEffect(() => {
+    const rec = finishedRun(prev.current, sim)
+    prev.current = sim
+    if (rec) setHistory((h) => [...h, rec].slice(-MAX_HISTORY))
+  }, [sim, setHistory])
+  const clear = useCallback(() => setHistory([]), [setHistory])
+  return [history, clear]
 }
 
 export function useNow(ms = 1000) {

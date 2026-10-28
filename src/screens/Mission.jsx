@@ -3,7 +3,7 @@ import {
   Users, Package, LayoutGrid, Route, Clock, Play, Pause, RotateCcw, Battery, Signal, Gauge,
   Navigation, Satellite, CircleCheck, TriangleAlert, Check, MoveUp, ListChecks, Waypoints,
 } from 'lucide-react'
-import { Panel, PageHeader, Dot, QuadIcon } from '../components/ui'
+import { Panel, PageHeader, Dot, QuadIcon, Stat } from '../components/ui'
 import { MapBase, icons } from '../components/MapBase'
 import { DroneFeed } from '../components/DroneFeed'
 import { toLatLng, dist } from '../lib/geo'
@@ -25,18 +25,6 @@ function activity(id, d, simStatus) {
     case 'rtl': return d.lowBattery ? 'Returning home – low battery' : 'Returning home'
     default: return 'Landed'
   }
-}
-
-function Stat({ icon: Icon, label, value }) {
-  return (
-    <div className="stat" role="group" aria-label={label}>
-      <Icon aria-hidden="true" size={26} strokeWidth={1.75} />
-      <div>
-        <span className="stat-label">{label}</span>
-        <span className="stat-value" data-testid="value">{value}</span>
-      </div>
-    </div>
-  )
 }
 
 function DroneKpis({ id, d, sim, config, gps }) {

@@ -348,3 +348,6 @@ main { padding: 20px 24px 40px; outline: none; }
 }
 
 .crash { max-width: 34rem; margin: 15vh auto; padding: 0 16px; display: grid; gap: 12px; justify-items: start; }
+
+.report { display: grid; gap: 16px; }
+.report .table td, .report .table th { white-space: nowrap; }
